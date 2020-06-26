@@ -11,6 +11,9 @@ class UProjectileMovementComponent;
 class USphereComponent;
 
 
+class UparticleSystem;
+
+
 UCLASS()
 class AFPSProjectile : public AActor
 {
@@ -26,13 +29,17 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement")
 	UProjectileMovementComponent* ProjectileMovement;
 
+	// Expose to blueprint to set the default effect
+	UPROPERTY(EditDefaultsOnly, Category="FX")
+	UParticleSystem* ExplosionEffect;
+
 public:
 
 	AFPSProjectile();
 
 	/** called when projectile hits something */
 	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	virtual void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 	/** Returns CollisionComp subobject **/
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }

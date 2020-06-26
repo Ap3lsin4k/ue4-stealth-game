@@ -81,6 +81,12 @@ void AFPSCharacter::Fire()
 }
 
 
+
+void AFPSCharacter::DoYouWantToGetSomeFire() {
+
+}
+
+
 void AFPSCharacter::MoveForward(float Value)
 {
 	if (Value != 0.0f)

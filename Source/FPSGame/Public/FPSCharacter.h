@@ -37,7 +37,7 @@ public:
 	AFPSCharacter();
 
 	/** Projectile class to spawn */
-	UPROPERTY(EditDefaultsOnly, Category="Projectile")
+	UPROPERTY(EditAnywhere, Category="Projectile")
 	TSubclassOf<AFPSProjectile> ProjectileClass;
 
 	/** Sound to play each time we fire */
@@ -51,7 +51,12 @@ public:
 protected:
 	
 	/** Fires a projectile. */
-	void Fire();
+	UFUNCTION(BlueprintCallable)
+	virtual void Fire();
+
+
+	UFUNCTION(BlueprintCallable)
+	void DoYouWantToGetSomeFire();
 
 	/** Handles moving forward/backward */
 	void MoveForward(float Val);
