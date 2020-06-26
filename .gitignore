@@ -73,3 +73,7 @@ Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+#Plastic SCM
+.plastic/
+ignore.conf
