@@ -11,9 +11,6 @@ class UProjectileMovementComponent;
 class USphereComponent;
 
 
-class UparticleSystem;
-
-
 UCLASS()
 class AFPSProjectile : public AActor
 {
