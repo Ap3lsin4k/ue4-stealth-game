@@ -21,15 +21,20 @@ AFPSExtractionZone::AFPSExtractionZone()
 	// Shows edges of the Cube
 	OverlapComp->SetHiddenInGame(false);
 
-	OverlapComp->OnComponentBeginOverlap.AddDynamic(this, &AFPSExtractionZone::OverlapLaunchPad);
-
 	DecalComp = CreateDefaultSubobject<UDecalComponent>(TEXT("DecalComp"));
 	DecalComp->DecalSize = FVector(200.0f);
 	DecalComp->SetupAttachment(RootComponent);
 }
 
+// Called when the game starts or when spawned
+void AFPSExtractionZone::BeginPlay()
+{
+	Super::BeginPlay();
 
-void AFPSExtractionZone::OverlapLaunchPad(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, 
+	OverlapComp->OnComponentBeginOverlap.AddDynamic(this, &AFPSExtractionZone::OverlapExtractionZone);
+}
+
+void AFPSExtractionZone::OverlapExtractionZone(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 
