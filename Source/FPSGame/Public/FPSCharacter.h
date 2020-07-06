@@ -53,14 +53,13 @@ public:
 
 protected:
 	
-	/** Fires a projectile. */
-	UFUNCTION(BlueprintCallable)
-	virtual void Fire();
+	/** Fires a projectile. 
+	should be marked as virtual to override in a Mock*/
+	void Fire();
 
-
-	UFUNCTION(BlueprintCallable)
-	void DoYouWantToGetSomeFire();
-
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerFire();
+	
 	/** Handles moving forward/backward */
 	void MoveForward(float Val);
 
@@ -75,6 +74,11 @@ public:
 
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return CameraComponent; }
+
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 
 };
 

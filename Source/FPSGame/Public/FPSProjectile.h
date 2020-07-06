@@ -26,10 +26,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement")
 	UProjectileMovementComponent* ProjectileMovement;
 
-	// Expose to blueprint to set the default effect
-	UPROPERTY(EditDefaultsOnly, Category="FX")
-	UParticleSystem* ExplosionEffect;
-
 public:
 
 	AFPSProjectile();
