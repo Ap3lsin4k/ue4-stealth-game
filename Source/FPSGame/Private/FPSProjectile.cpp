@@ -53,5 +53,6 @@ void AFPSProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPr
 		//Clients don't own the actor, therefore the server must destroy it
 		Destroy();
 	}
-	// clients symulates server
+	// clients simulates server
+
 }

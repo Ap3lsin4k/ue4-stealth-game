@@ -73,7 +73,7 @@ void AFPSObjectiveActor::NotifyActorBeginOverlap(AActor* OtherActor)
 	/*
 	When C pickup 
 	*/
-	// we only want to run this on the server because Objective Replicates: true
+	// we only want to run Destroy on the server because Objective Replicates(to clients): true
 	if (Role == ROLE_Authority)
 	{
 
@@ -99,11 +99,11 @@ void AFPSObjectiveActor::NotifyActorBeginOverlap(AActor* OtherActor)
 	NotifyObjectiveBeginOverlap for:BP_Player_C_0, ROLE_Authority: true (Server) <= first person
 	*/
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue,
-		FString::Printf(
-			TEXT("NotifyObjectiveBeginOverlap for:%s"), *AActor::GetDebugName(OtherActor)
-		)
-	);
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue,
+	//	FString::Printf(
+	//		TEXT("NotifyObjectiveBeginOverlap for:%s"), *AActor::GetDebugName(OtherActor)
+	//	)
+	//);	
 	UE_LOG(LogTemp, Log, TEXT("NotifyObjectiveBeginOverlap for:%s, ROLE_Authority: %s"), *AActor::GetDebugName(OtherActor),
 		Role == ROLE_Authority ? TEXT("true") : TEXT("false")
 		);

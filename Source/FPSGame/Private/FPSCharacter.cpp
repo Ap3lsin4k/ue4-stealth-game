@@ -8,7 +8,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ObjectMacros.h"
 #include "Math/Rotator.h"
-
+#include "Components/PawnNoiseEmitterComponent.h"
+#include "Net/UnrealNetwork.h"
 
 AFPSCharacter::AFPSCharacter()
 {
@@ -29,6 +30,8 @@ AFPSCharacter::AFPSCharacter()
 	GunMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FP_Gun"));
 	GunMeshComponent->CastShadow = false;
 	GunMeshComponent->SetupAttachment(Mesh1PComponent, "GripPoint");
+
+	NoiseEmitterComponent = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("NoiseEmitter"));
 }
 
 
@@ -114,9 +117,11 @@ void AFPSCharacter::ServerFire_Implementation()
 		//Set Spawn Collision Handling Override
 		FActorSpawnParameters ActorSpawnParams;
 		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
-
+		ActorSpawnParams.Instigator = this; // doesn't work without it
 		// spawn the projectile at the muzzle
 		GetWorld()->SpawnActor<AFPSProjectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, ActorSpawnParams);
+
+		MakeNoise(0.2f, Instigator); // shooting noise
 	}
 
 }
@@ -144,4 +149,18 @@ void AFPSCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(GetActorRightVector(), Value);
 	}
+}
+
+void AFPSCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	/* whenever bIsCarryingObjective is set, all the clients receive the var too
+	therefore bIsCarryingObjective will be common for everyone. C_0 can pickup an objective and C_1 can complete the mission
+	Like those guys are in the same team.
+	*/
+	DOREPLIFETIME(AFPSCharacter, bIsCarryingObjective);
+
+	// only gets send to whoever is controlling this character. We just use it for local HUD, so other guys should not be notified that we started carrying it
+	//DOREPLIFETIME_CONDITION(AFPSCharacter, bIsCarryingObjective, COND_OwnerOnly);
 }

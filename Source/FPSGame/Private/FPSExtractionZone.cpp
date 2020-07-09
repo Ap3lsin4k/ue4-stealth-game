@@ -11,6 +11,7 @@
 AFPSExtractionZone::AFPSExtractionZone()
 {
 	// TEXT("OverlapComp") the name as shown in blueprints (code?)
+	// see this name in the Blueprint’s component list
 	OverlapComp = CreateDefaultSubobject<UBoxComponent>(TEXT("OverlapComp"));
 	OverlapComp->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	OverlapComp->SetCollisionResponseToAllChannels(ECR_Ignore);
@@ -45,12 +46,12 @@ void AFPSExtractionZone::OverlapExtractionZone(UPrimitiveComponent * OverlappedC
 
 	if (MyPawn->bIsCarryingObjective) 
 	{
-		// if multiplayer GameMode exists on the server
+		// if multiplayer GameMode exists only on the server (null on clients)
 		// else if singleplayer GameMode is accessible from any Actor class
 		AFPSGameMode* GM = Cast<AFPSGameMode>(GetWorld()->GetAuthGameMode());
 		if (GM) 
 		{
-			GM->CompleteMission(MyPawn);
+			GM->CompleteMission(MyPawn, true);
 		}
 	}
 	else
