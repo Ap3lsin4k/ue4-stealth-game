@@ -21,3 +21,8 @@ Features
 
 Based on: https://github.com/tomlooman/SimpleFPSTemplate
 
+
+Visualization of some features:
+
+https://www.youtube.com/watch?v=d2dODlUUE2Q
+https://www.youtube.com/watch?v=QY8jpl4lYi0
