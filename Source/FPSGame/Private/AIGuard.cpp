@@ -58,6 +58,7 @@ void AAIGuard::OnPawnHeard(APawn* Instigator, const FVector& Location, float Vol
 	DrawDebugSphere(GetWorld(), Location, 32.f, 12, FColor::Green, false, 10.0f);
 
 	FVector Direction = Location - GetActorLocation();
+	// accuracy (?)
 	Direction.Normalize();
 
 	// X is a direction vector
